@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verifikasi - Dark Green System</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: monospace;
+    background: black;
+    color: #00ff00;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* BOX */
+.verify-box {
+    border: 1px solid #00ff00;
+    padding: 30px;
+    width: 300px;
+    box-shadow: 0 0 15px #00ff00;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* INPUT */
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    background: black;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    text-align: center;
+    letter-spacing: 5px;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #00ff00;
+    color: black;
+}
+
+/* MESSAGE */
+.message {
+    font-size: 13px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.error {
+    color: red;
+}
+
+.success {
+    color: #00ff00;
+}
+</style>
+
+</head>
+<body>
+
+<div class="verify-box">
+    <h2>VERIFIKASI</h2>
+
+    <div id="message" class="message"></div>
+
+    <input type="text" id="code" placeholder="MASUKKAN KODE" maxlength="6">
+
+    <button onclick="verify()">VERIFIKASI</button>
+</div>
+
+<script>
+function verify() {
+    const inputCode = document.getElementById("code").value.trim();
+    const message = document.getElementById("message");
+
+    message.textContent = "";
+    message.className = "message";
+
+    const tempUser = JSON.parse(localStorage.getItem("tempUser"));
+
+    if (!tempUser) {
+        message.textContent = "Data tidak ditemukan! Silakan daftar ulang.";
+        message.classList.add("error");
+        return;
+    }
+
+    if (!inputCode) {
+        message.textContent = "Kode wajib diisi!";
+        message.classList.add("error");
+        return;
+    }
+
+    if (inputCode !== tempUser.code) {
+        message.textContent = "Kode salah!";
+        message.classList.add("error");
+        return;
+    }
+
+    // SIMPAN JADI USER FINAL
+    const finalUser = {
+        email: tempUser.email,
+        username: tempUser.username,
+        password: tempUser.password
+    };
+
+    localStorage.setItem("user", JSON.stringify(finalUser));
+
+    // HAPUS DATA SEMENTARA
+    localStorage.removeItem("tempUser");
+
+    message.textContent = "Verifikasi berhasil! Mengalihkan ke login...";
+    message.classList.add("success");
+
+    setTimeout(() => {
+        window.location.href = "login.html";
+    }, 2000);
+}
+</script>
+
+</body>
+</html>
