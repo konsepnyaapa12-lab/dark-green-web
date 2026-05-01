@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register - Dark Green System</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: monospace;
+    background: black;
+    color: #00ff00;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* BOX */
+.register-box {
+    border: 1px solid #00ff00;
+    padding: 30px;
+    width: 320px;
+    box-shadow: 0 0 15px #00ff00;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* INPUT */
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    background: black;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #00ff00;
+    color: black;
+}
+
+/* ERROR */
+.error {
+    color: red;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+/* SUCCESS */
+.success {
+    color: #00ff00;
+    font-size: 13px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+</style>
+
+</head>
+<body>
+
+<div class="register-box">
+    <h2>REGISTER SYSTEM</h2>
+
+    <div id="message"></div>
+
+    <input type="email" id="email" placeholder="Email">
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <input type="password" id="confirm" placeholder="Konfirmasi Password">
+
+    <button onclick="register()">DAFTAR</button>
+</div>
+
+<script>
+function generateCode() {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+function register() {
+    const email = document.getElementById("email").value.trim();
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+    const confirm = document.getElementById("confirm").value;
+    const message = document.getElementById("message");
+
+    message.textContent = "";
+    message.className = "";
+
+    // VALIDASI
+    if (!email || !username || !password || !confirm) {
+        message.textContent = "Semua field wajib diisi!";
+        message.className = "error";
+        return;
+    }
+
+    if (!email.includes("@")) {
+        message.textContent = "Email tidak valid!";
+        message.className = "error";
+        return;
+    }
+
+    if (password.length < 6) {
+        message.textContent = "Password minimal 6 karakter!";
+        message.className = "error";
+        return;
+    }
+
+    if (password !== confirm) {
+        message.textContent = "Password tidak cocok!";
+        message.className = "error";
+        return;
+    }
+
+    // CEK AKUN SUDAH ADA
+    const existingUser = JSON.parse(localStorage.getItem("user"));
+    if (existingUser && existingUser.email === email) {
+        message.textContent = "Email sudah terdaftar!";
+        message.className = "error";
+        return;
+    }
+
+    // GENERATE KODE
+    const code = generateCode();
+
+    // SIMPAN DATA SEMENTARA
+    const userData = {
+        email: email,
+        username: username,
+        password: btoa(password), // encode sederhana
+        code: code
+    };
+
+    localStorage.setItem("tempUser", JSON.stringify(userData));
+
+    // TAMPILKAN KODE (SIMULASI)
+    message.innerHTML = `
+        <div class="success">
+            Kode verifikasi: <b>${code}</b><br>
+            (Simulasi - nanti pakai email asli)
+        </div>
+    `;
+
+    // PINDAH KE VERIFY
+    setTimeout(() => {
+        window.location.href = "verify.html";
+    }, 3000);
+}
+</script>
+
+</body>
+</html>
