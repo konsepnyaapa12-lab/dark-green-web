@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dark Green System</title>
+
+<style>
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* BODY */
+body {
+    font-family: monospace;
+    background: black;
+    color: #00ff00;
+    overflow: hidden;
+}
+
+/* VIDEO BACKGROUND */
+video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+/* OVERLAY */
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+}
+
+/* CONTENT */
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+/* TITLE */
+h1 {
+    font-size: 2.5em;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #00ff00;
+}
+
+/* SUBTITLE */
+p {
+    margin-bottom: 30px;
+    opacity: 0.8;
+}
+
+/* BUTTON */
+button {
+    padding: 12px 30px;
+    border: 2px solid #00ff00;
+    background: transparent;
+    color: #00ff00;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #00ff00;
+    color: black;
+    box-shadow: 0 0 15px #00ff00;
+}
+
+/* FADE ANIMATION */
+.fade-out {
+    animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+</style>
+
+</head>
+<body>
+
+<!-- VIDEO -->
+<video autoplay muted loop>
+    <source src="assets/intro.mp4" type="video/mp4">
+</video>
+
+<!-- DARK OVERLAY -->
+<div class="overlay"></div>
+
+<!-- CONTENT -->
+<div class="container" id="content">
+    <h1>DARK GREEN SYSTEM</h1>
+    <p>Platform Edukasi Coding & Teknologi</p>
+    <button onclick="masuk()">MASUK KE SISTEM</button>
+</div>
+
+<script>
+function masuk() {
+    const content = document.getElementById("content");
+    content.classList.add("fade-out");
+
+    setTimeout(() => {
+        window.location.href = "login.html";
+    }, 1000);
+}
+</script>
+
+</body>
+  </html>
