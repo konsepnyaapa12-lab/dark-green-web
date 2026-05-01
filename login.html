@@ -103,44 +103,8 @@ a:hover {
         Belum punya akun? <a href="register.html">Daftar</a>
     </div>
 </div>
-
-<script>
-function login() {
-    const email = document.getElementById("email").value.trim();
-    const username = document.getElementById("username").value.trim();
-    const error = document.getElementById("error");
-
-    error.textContent = "";
-
-    // VALIDASI
-    if (!email || !username) {
-        error.textContent = "Semua field wajib diisi!";
-        return;
-    }
-
-    if (!email.includes("@")) {
-        error.textContent = "Format email tidak valid!";
-        return;
-    }
-
-    // AMBIL DATA DARI LOCALSTORAGE
-    const userData = JSON.parse(localStorage.getItem("user"));
-
-    if (!userData) {
-        error.textContent = "Akun tidak ditemukan!";
-        return;
-    }
-
-    if (email !== userData.email || username !== userData.username) {
-        error.textContent = "Email atau Username salah!";
-        return;
-    }
-
-    // LOGIN BERHASIL
-    alert("Login berhasil!");
-    window.location.href = "dashboard.html";
-}
-</script>
-
+<script src="js/auth.js"></script>
+</body>
+</html>
 </body>
 </html>
