@@ -93,54 +93,9 @@ button:hover {
     <button onclick="verify()">VERIFIKASI</button>
 </div>
 
-<script>
-function verify() {
-    const inputCode = document.getElementById("code").value.trim();
-    const message = document.getElementById("message");
-
-    message.textContent = "";
-    message.className = "message";
-
-    const tempUser = JSON.parse(localStorage.getItem("tempUser"));
-
-    if (!tempUser) {
-        message.textContent = "Data tidak ditemukan! Silakan daftar ulang.";
-        message.classList.add("error");
-        return;
-    }
-
-    if (!inputCode) {
-        message.textContent = "Kode wajib diisi!";
-        message.classList.add("error");
-        return;
-    }
-
-    if (inputCode !== tempUser.code) {
-        message.textContent = "Kode salah!";
-        message.classList.add("error");
-        return;
-    }
-
-    // SIMPAN JADI USER FINAL
-    const finalUser = {
-        email: tempUser.email,
-        username: tempUser.username,
-        password: tempUser.password
-    };
-
-    localStorage.setItem("user", JSON.stringify(finalUser));
-
-    // HAPUS DATA SEMENTARA
-    localStorage.removeItem("tempUser");
-
-    message.textContent = "Verifikasi berhasil! Mengalihkan ke login...";
-    message.classList.add("success");
-
-    setTimeout(() => {
-        window.location.href = "login.html";
-    }, 2000);
-}
-</script>
+<script src="js/auth.js"></script>
+</body>
+</html>
 
 </body>
 </html>
